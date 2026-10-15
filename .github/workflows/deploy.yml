@@ -1,0 +1,52 @@
+# Publishes the landing page to GitHub Pages on every push to main.
+name: Deploy to GitHub Pages
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+# Only one deployment at a time; a newer push replaces a pending one
+concurrency:
+  group: pages
+  cancel-in-progress: true
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Configure Pages
+        id: pages
+        uses: actions/configure-pages@v5
+
+      - name: Build site folder
+        env:
+          BASE_PATH: ${{ steps.pages.outputs.base_path }}
+        run: |
+          mkdir -p _site
+          cp index.html 404.html .nojekyll _site/
+          cp -R assets _site/
+          # The 404 page can be served from any URL, so its links resolve
+          # against <base>; point it at the Pages subpath (empty on a user site).
+          sed -i "s|<base href=\"/\">|<base href=\"${BASE_PATH}/\">|" _site/404.html
+          grep -q "<base href=\"${BASE_PATH}/\">" _site/404.html
+
+      - name: Upload artifact
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: _site
+
+      - name: Deploy
+        id: deployment
+        uses: actions/deploy-pages@v4
