@@ -33,7 +33,7 @@
 
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,500;1,300;1,500&family=Jost:wght@300;400&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,500;1,300;1,500&family=Jost:wght@300;400;500&display=swap" rel="stylesheet">
 
   <!-- Structured data for local search -->
   <script type="application/ld+json">
@@ -85,7 +85,7 @@
 
       --perla-hondo: #F4F0E9;
       --dorado-suave: rgba(201, 164, 76, 0.45);
-      --tinta-suave: rgba(46, 36, 56, 0.72);
+      --tinta-suave: rgba(46, 36, 56, 0.8);
 
       --serif: "Cormorant Garamond", "Cormorant", Georgia, "Times New Roman", serif;
       --sans: "Jost", "Futura", "Avenir Next", system-ui, sans-serif;
@@ -127,7 +127,7 @@
         --bg-deep: #31254A;
         --surface: #43345F;
         --ink: #F6F1FA;
-        --ink-soft: rgba(246, 241, 250, 0.78);
+        --ink-soft: rgba(246, 241, 250, 0.86);
         --accent: #D7C6EC;
         --btn-bg: var(--lila);
         --btn-ink: var(--tinta);
@@ -149,7 +149,7 @@
       --bg-deep: #31254A;
       --surface: #43345F;
       --ink: #F6F1FA;
-      --ink-soft: rgba(246, 241, 250, 0.78);
+      --ink-soft: rgba(246, 241, 250, 0.86);
       --accent: #D7C6EC;
       --btn-bg: var(--lila);
       --btn-ink: var(--tinta);
@@ -182,11 +182,15 @@
       background: var(--bg);
       color: var(--ink);
       transition: background-color 0.5s var(--ease-out), color 0.5s var(--ease-out);
-      font: 300 1rem/1.7 var(--sans);
+      font: 400 1rem/1.65 var(--sans);
       overflow-x: clip;
       -webkit-font-smoothing: antialiased;
       text-rendering: optimizeLegibility;
+      caret-color: var(--accent);
     }
+
+    ::selection { background: var(--lila); color: var(--tinta); }
+    time, .plan__price, .intensity__text { font-variant-numeric: tabular-nums lining-nums; }
 
     /* Very subtle film grain over the pearl background */
     body::after {
@@ -260,9 +264,9 @@
     .label {
       font-family: var(--sans);
       font-weight: 400;
-      font-size: 0.75rem;
+      font-size: 0.8125rem;
       line-height: 1.4;
-      letter-spacing: 0.26em;
+      letter-spacing: 0.16em;
       text-transform: uppercase;
       color: var(--accent);
     }
@@ -305,21 +309,20 @@
       padding: 0.85rem 1.6rem;
       border: 1px solid transparent;
       border-radius: 999px;
-      font: 400 0.72rem/1 var(--sans);
-      letter-spacing: 0.22em;
+      font: 500 0.8rem/1 var(--sans);
+      letter-spacing: 0.14em;
       text-transform: uppercase;
       text-decoration: none;
       cursor: pointer;
       overflow: hidden;
       isolation: isolate;
-      transition: background-color 0.35s var(--ease-out), color 0.35s var(--ease-out),
-                  border-color 0.35s var(--ease-out), transform 0.1s ease-out;
+      transition: background-color 0.25s var(--ease-out), color 0.25s var(--ease-out),
+                  border-color 0.25s var(--ease-out), transform 0.12s ease-out;
     }
     /* Instant feedback on press, not on release */
     .btn:active { transform: scale(0.97); }
 
     .btn--solid { background: var(--btn-bg); color: var(--btn-ink); }
-    .btn--solid:hover { background: var(--btn-hover); }
 
     .btn--line { border-color: var(--dorado); color: var(--ink); background: transparent; }
     .btn--line::before {
@@ -328,12 +331,18 @@
       background: var(--dorado);
       transform: scaleX(0);
       transform-origin: left;
-      transition: transform 0.5s var(--ease-out);
+      transition: transform 0.4s var(--ease-out);
     }
-    .btn--line:hover::before { transform: scaleX(1); }
 
     .btn--gold { background: var(--dorado); color: var(--tinta); }
-    .btn--gold:hover { background: var(--btn-bg); color: var(--btn-ink); }
+
+    /* Hover only where a real pointer can hover; taps never leave it stuck */
+    @media (hover: hover) and (pointer: fine) {
+      .btn--solid:hover { background: var(--btn-hover); }
+      .btn--line:hover { color: var(--tinta); }
+      .btn--line:hover::before { transform: scaleX(1); }
+      .btn--gold:hover { background: var(--btn-bg); color: var(--btn-ink); }
+    }
 
     .btn svg { width: 1.05rem; height: 1.05rem; flex: none; }
 
@@ -355,7 +364,7 @@
     .js .draw use {
       stroke-dasharray: 1;
       stroke-dashoffset: 1;
-      transition: stroke-dashoffset var(--draw-dur, 2.8s) var(--ease-in-out) var(--draw-delay, 0s);
+      transition: stroke-dashoffset var(--draw-dur, 1.6s) var(--ease-in-out) var(--draw-delay, 0s);
     }
     .js .draw.is-in use { stroke-dashoffset: 0; }
 
@@ -364,8 +373,8 @@
        ========================================================== */
     .js .reveal {
       opacity: 0;
-      transform: translateY(28px);
-      transition: opacity 1s var(--ease-out) var(--delay, 0s), transform 1.2s var(--ease-out) var(--delay, 0s);
+      transform: translateY(20px);
+      transition: opacity 0.7s var(--ease-out) var(--delay, 0s), transform 0.8s var(--ease-out) var(--delay, 0s);
     }
     .js .reveal.is-in { opacity: 1; transform: none; }
 
@@ -380,15 +389,15 @@
     .split .w > span { display: inline-block; }
     .js .split .w > span {
       transform: translateY(110%);
-      transition: transform 1.1s var(--ease-out);
-      transition-delay: calc(var(--i, 0) * 70ms + var(--delay, 0s));
+      transition: transform 0.8s var(--ease-out);
+      transition-delay: calc(var(--i, 0) * 50ms + var(--delay, 0s));
     }
     .js .split.is-in .w > span { transform: none; }
 
     /* Mask reveal for image-like panels */
     .js .mask {
       clip-path: inset(0 0 100% 0);
-      transition: clip-path 1.5s var(--ease-in-out) var(--delay, 0s);
+      transition: clip-path 1s var(--ease-in-out) var(--delay, 0s);
     }
     .js .mask.is-in { clip-path: inset(0 0 0 0); }
 
@@ -402,7 +411,7 @@
       display: grid;
       place-items: center;
       background: var(--bg);
-      transition: transform 1.1s var(--ease-in-out);
+      transition: transform 0.7s var(--ease-in-out);
     }
     .loader, .loader[hidden], .intro-seen .loader, .intro-failsafe .loader { display: none; }
     .js .loader:not([hidden]) { display: grid; }
@@ -416,7 +425,7 @@
       aspect-ratio: 200 / 330;
     }
     .loader__stage .pose { position: absolute; inset: 0; width: 100%; height: 100%; --sw: 1.3; transition: opacity 0.6s ease; }
-    .loader__stage .pose use { --draw-dur: 1.1s; }
+    .loader__stage .pose use { --draw-dur: 0.6s; }
 
     .loader__logo {
       position: absolute;
@@ -425,7 +434,7 @@
       place-items: center;
       opacity: 0;
       transform: scale(0.96);
-      transition: opacity 0.8s var(--ease-out), transform 1s var(--ease-out);
+      transition: opacity 0.4s var(--ease-out), transform 0.5s var(--ease-out);
     }
 
     .loader.show-logo .pose { opacity: 0; }
@@ -457,7 +466,7 @@
       margin: 0.7rem -0.32em 0 0;
     }
     .logo-stack__tag {
-      font: 400 0.62rem/1 var(--sans);
+      font: 400 0.7rem/1 var(--sans);
       letter-spacing: 0.3em;
       text-transform: uppercase;
       color: var(--accent);
@@ -515,8 +524,8 @@
     }
     .nav__links a {
       position: relative;
-      font: 400 0.7rem/1 var(--sans);
-      letter-spacing: 0.2em;
+      font: 400 0.8125rem/1 var(--sans);
+      letter-spacing: 0.14em;
       text-transform: uppercase;
       text-decoration: none;
       padding: 0.6rem 0;
@@ -589,8 +598,8 @@
       visibility: visible;
       transition: clip-path 0.8s var(--ease-in-out), visibility 0s;
     }
-    .menu ol { list-style: none; margin: 0; padding: 0; counter-reset: m; }
-    .menu li { counter-increment: m; border-bottom: 1px solid var(--dorado-suave); }
+    .menu ol { list-style: none; margin: 0; padding: 0; }
+    .menu li { border-bottom: 1px solid var(--dorado-suave); }
     .menu li a {
       display: flex;
       align-items: baseline;
@@ -601,12 +610,6 @@
       opacity: 0;
       transform: translateY(16px);
       transition: opacity 0.5s var(--ease-out), transform 0.6s var(--ease-out);
-    }
-    .menu li a::before {
-      content: "0" counter(m);
-      font: 400 0.65rem/1 var(--sans);
-      letter-spacing: 0.2em;
-      color: var(--accent);
     }
     .menu.is-open li a { opacity: 1; transform: none; transition-delay: calc(0.25s + var(--i) * 0.05s); }
     .menu .btn {
@@ -688,7 +691,9 @@
       transform-style: preserve-3d;
     }
     .hero__figure use { pointer-events: visiblePainted; cursor: pointer; }
-    .hero__figure:hover .pose { filter: drop-shadow(0 0 10px rgba(201, 164, 76, 0.35)); }
+    @media (hover: hover) and (pointer: fine) {
+      .hero__figure:hover .pose { filter: drop-shadow(0 0 10px rgba(201, 164, 76, 0.35)); }
+    }
     .hero__figure:focus-visible { outline-offset: -8px; }
     .hero__figure.is-spinning .pose { animation: pirouette 1.3s var(--ease-in-out); }
     @keyframes pirouette {
@@ -728,14 +733,14 @@
       animation: hint-breathe 2.8s var(--ease-in-out) infinite;
     }
     .dance-hint__text { display: grid; gap: 0.15rem; }
-    .dance-hint__text .label { font-size: 0.62rem; }
+    .dance-hint__text .label { font-size: 0.8125rem; }
     .dance-hint__text em { font: italic 300 1.05rem/1.1 var(--serif); }
     @keyframes hint-breathe {
       0%, 100% { transform: scaleX(0.4); opacity: 0.5; }
       50% { transform: scaleX(1); opacity: 1; }
     }
     .js .dance-hint { opacity: 0; }
-    .js .dance-hint.is-in { opacity: 1; transition-delay: 1.6s; }
+    .js .dance-hint.is-in { opacity: 1; transition-delay: 1.2s; }
     @media (min-width: 900px) {
       .dance-hint { top: auto; left: auto; bottom: 4.2rem; right: calc(var(--gutter) + 72px); }
     }
@@ -743,7 +748,7 @@
       .js .dance-hint { opacity: 1; }
       .hero__figure.is-spinning .pose { animation: none; }
     }
-    .hero__figure .pose use { --draw-dur: 3.4s; --draw-delay: 0.2s; }
+    .hero__figure .pose use { --draw-dur: 1.8s; --draw-delay: 0.1s; }
 
     .hero__aside {
       position: relative;
@@ -797,7 +802,7 @@
         transform: translateY(-50%);
         opacity: 1;
       }
-      .hero__figure .pose { --sw: 0.75; }
+      .hero__figure .pose { --sw: 1; }
       .vertical-note { display: block; }
     }
 
@@ -807,23 +812,6 @@
     section { position: relative; overflow-x: clip; }
     .section { padding-block: clamp(2.5rem, 6vw, 4.5rem); }
     .section--deep { background: var(--bg-deep); }
-
-    /* Giant outlined section numeral, bleeding behind the heading */
-    .section[data-num]::before {
-      content: attr(data-num);
-      position: absolute;
-      top: clamp(0.5rem, 2vw, 1.5rem);
-      right: var(--gutter);
-      z-index: 0;
-      font: italic 300 clamp(6.5rem, 17vw, 14rem)/0.8 var(--serif);
-      letter-spacing: -0.04em;
-      color: transparent;
-      -webkit-text-stroke: 1px var(--dorado-suave);
-      pointer-events: none;
-      user-select: none;
-    }
-    .section[data-num-side="left"]::before { right: auto; left: var(--gutter); }
-    @media (max-width: 899px) { .section[data-num-side="left"]::before { left: auto; right: var(--gutter); } }
 
     /* Full-color interlude: the manifesto sits on ink, like an entr'acte */
     .section--stage {
@@ -901,9 +889,9 @@
       stroke-dashoffset: 1;
       transition: stroke-dashoffset 1.1s var(--ease-in-out);
     }
-    .fx-card:hover .card__trace rect, .fx-card:focus-within .card__trace rect { stroke-dashoffset: 0; }
+    .fx-card:focus-within .card__trace rect { stroke-dashoffset: 0; }
 
-    /* Light reflection: follows the pointer and sweeps across on enter */
+    /* Soft light that follows the pointer */
     .fx-card::before {
       content: "";
       position: absolute;
@@ -911,26 +899,16 @@
       z-index: -1;
       background: radial-gradient(420px circle at var(--mx) var(--my), var(--glow), transparent 60%);
       opacity: 0;
-      transition: opacity 0.5s var(--ease-out);
+      transition: opacity 0.4s var(--ease-out);
     }
-    .fx-card::after {
-      content: "";
-      position: absolute;
-      top: -50%;
-      left: -60%;
-      width: 40%;
-      height: 200%;
-      z-index: 3;
-      pointer-events: none;
-      background: linear-gradient(100deg, transparent, var(--shine), transparent);
-      transform: translateX(-100%) rotate(12deg);
+    @media (hover: hover) and (pointer: fine) {
+      .fx-card:hover .card__trace rect { stroke-dashoffset: 0; }
+      .fx-card:hover::before { opacity: 1; }
     }
-    .fx-card:hover::before { opacity: 1; }
-    .fx-card:hover::after { transform: translateX(520%) rotate(12deg); transition: transform 1.2s var(--ease-out); }
 
     .card__num {
       display: flex;
-      justify-content: space-between;
+      justify-content: flex-end;
       align-items: center;
     }
 
@@ -941,17 +919,17 @@
       place-items: center;
       transform: translateZ(30px);
     }
-    .card__figure .pose { height: 210px; width: auto; max-width: 100%; --sw: 1.15; }
+    .card__figure .pose { height: 210px; width: auto; max-width: 100%; --sw: 1.5; }
 
     .card h3 { transform: translateZ(20px); }
-    .card__tagline { font: italic 300 1.2rem/1.35 var(--serif); color: var(--accent); margin: 0.3rem 0 0.9rem; }
-    .card__desc { margin: 0 0 1.2rem; font-size: 0.95rem; color: var(--ink-soft); }
+    .card__tagline { font: italic 300 1.25rem/1.35 var(--serif); color: var(--accent); margin: 0.3rem 0 0.9rem; }
+    .card__desc { margin: 0 0 1.2rem; font-size: 1rem; color: var(--ink-soft); }
 
     .card ul {
       list-style: none;
       margin: 0 0 1.5rem;
       padding: 0;
-      font-size: 0.9rem;
+      font-size: 0.95rem;
     }
     .card li {
       display: flex;
@@ -974,7 +952,7 @@
       background: rgba(201, 164, 76, 0.22);
     }
     .intensity__bars i.on { background: var(--dorado); }
-    .intensity__text { font-size: 0.82rem; color: var(--ink-soft); }
+    .intensity__text { font-size: 0.875rem; color: var(--ink-soft); }
 
     /* ==========================================================
        Ballet fit explainer
@@ -986,45 +964,25 @@
     }
     @media (min-width: 960px) { .bf { grid-template-columns: 5fr 6fr; } }
 
-    .bf__visual {
-      position: relative;
+    .bf__frame {
       aspect-ratio: 4 / 5;
-      background:
-        linear-gradient(180deg, rgba(183, 159, 209, 0.28), rgba(183, 159, 209, 0.06) 70%),
-        var(--bg);
-      border: 1px solid var(--dorado-suave);
-      display: grid;
-      place-items: end center;
       overflow: hidden;
+      background: var(--bg);
     }
-    .bf__visual .pose { width: 72%; height: auto; margin-bottom: 6%; --sw: 1; }
-    /* The barre */
-    .bf__barre {
-      position: absolute;
-      left: 0; right: 0;
-      top: 44%;
-      height: 2px;
-      background: var(--dorado);
-      box-shadow: 0 6px 0 -1px rgba(201, 164, 76, 0.25);
-    }
-    .bf__barre::before, .bf__barre::after {
-      content: "";
-      position: absolute;
-      top: 0;
-      width: 2px;
-      height: 400px;
-      background: var(--dorado);
-    }
-    .bf__barre::before { left: 8%; }
-    .bf__barre::after { right: 8%; }
-    .bf__caption {
-      position: absolute;
-      top: 1.2rem;
-      left: 1.2rem;
-      right: 1.2rem;
-      display: flex;
-      justify-content: space-between;
-    }
+    /* Slight crop hides the dark edges of the museum scans */
+    .bf__frame img { width: 100%; height: 100%; object-fit: cover; object-position: 66% 40%; transform: scale(1.04); }
+    .bf__visual figcaption,
+    .band figcaption { margin-top: 0.8rem; font-size: 0.875rem; color: var(--ink-soft); }
+    .bf__visual figcaption em, .band figcaption em { color: inherit; }
+
+    /* Full-width painting between the schedule and the plans */
+    .band { margin: 0; padding-bottom: clamp(2rem, 5vw, 3.5rem); }
+    .band__frame { aspect-ratio: 16 / 7; overflow: hidden; background: var(--bg-deep); }
+    .band__frame img { width: 100%; height: 100%; object-fit: cover; object-position: 50% 45%; transform: scale(1.04); }
+    @media (max-width: 699px) { .band__frame { aspect-ratio: 4 / 3; } .band__frame img { object-position: 62% 50%; } }
+    .js .band__frame img { transform: scale(1.1); transition: transform 1.6s var(--ease-out); }
+    .js .band__frame.is-in img { transform: scale(1.04); }
+    @media (prefers-reduced-motion: reduce) { .js .band__frame img { transform: scale(1.04); transition: none; } }
 
     .bf__text p { margin: 0 0 1.3rem; max-width: 36rem; }
     .bf__text .dropcap::first-letter {
@@ -1043,14 +1001,8 @@
     }
     @media (min-width: 600px) { .pillars { grid-template-columns: repeat(3, 1fr); } }
     .pillars li { padding: 1.2rem 1.1rem 1.3rem; }
-    .pillars .pillar__num {
-      display: block;
-      font: italic 300 1.6rem/1 var(--serif);
-      color: var(--dorado);
-      margin-bottom: 0.6rem;
-    }
     .pillars strong { display: block; font: 500 1.35rem/1.15 var(--serif); margin-bottom: 0.3rem; }
-    .pillars span { font-size: 0.9rem; color: var(--ink-soft); }
+    .pillars span { font-size: 0.95rem; color: var(--ink-soft); }
 
     /* ==========================================================
        Body and soul manifesto
@@ -1060,10 +1012,11 @@
       gap: clamp(2rem, 5vw, 3.5rem);
     }
     .manifesto__open {
-      font: italic 300 clamp(2.3rem, 7vw, 5.4rem)/1.02 var(--serif);
+      font: italic 300 clamp(2.3rem, 6vw, 5rem)/1.02 var(--serif);
       letter-spacing: -0.02em;
-      max-width: 15ch;
+      max-width: 22ch;
       margin: 0;
+      text-wrap: balance;
     }
     .verse {
       position: relative;
@@ -1073,10 +1026,11 @@
       border-top: 1px solid var(--dorado-suave);
     }
     .verse__line {
-      font: italic 300 clamp(1.9rem, 5vw, 3.6rem)/1.08 var(--serif);
-      letter-spacing: -0.015em;
+      font: italic 300 clamp(1.6rem, 3.4vw, 2.4rem)/1.12 var(--serif);
+      letter-spacing: -0.01em;
       margin: 0;
-      max-width: 18ch;
+      max-width: 24ch;
+      text-wrap: balance;
     }
     .verse__line em { font-weight: 500; }
     .verse p:not(.verse__line) { margin: 0; max-width: 30rem; color: var(--ink-soft); }
@@ -1126,7 +1080,7 @@
       place-items: end center;
       overflow: hidden;
     }
-    .portrait__frame .pose { width: 64%; height: auto; margin-bottom: 4%; --sw: 1; }
+    .portrait__frame .pose { width: 64%; height: auto; margin-bottom: 4%; --sw: 1.4; }
     .portrait__ring {
       position: absolute;
       inset: -14px -14px 14px 14px;
@@ -1181,14 +1135,14 @@
       border: 1px solid var(--dorado-suave);
       border-radius: 999px;
       background: transparent;
-      font: 400 0.68rem/1 var(--sans);
-      letter-spacing: 0.2em;
+      font: 400 0.8rem/1 var(--sans);
+      letter-spacing: 0.12em;
       text-transform: uppercase;
       cursor: pointer;
-      transition: background-color 0.3s, color 0.3s, border-color 0.3s, transform 0.1s ease-out;
+      transition: background-color 0.2s, color 0.2s, border-color 0.2s, transform 0.12s ease-out;
     }
     .chip:active { transform: scale(0.96); }
-    .chip:hover { border-color: var(--dorado); }
+    @media (hover: hover) and (pointer: fine) { .chip:hover { border-color: var(--dorado); } }
     .chip[aria-pressed="true"] { background: var(--btn-bg); color: var(--btn-ink); border-color: var(--btn-bg); }
 
     .week {
@@ -1222,7 +1176,7 @@
       align-items: baseline;
       justify-content: space-between;
     }
-    .day h3 small { font: 400 0.62rem/1 var(--sans); letter-spacing: 0.24em; text-transform: uppercase; color: var(--accent); }
+    .day h3 small { font: 400 0.8125rem/1 var(--sans); letter-spacing: 0.1em; color: var(--accent); }
     .day ol { list-style: none; margin: 0; padding: 0; display: grid; gap: 0.6rem; }
 
     .slot {
@@ -1230,9 +1184,9 @@
       border-left: 2px solid var(--c, var(--dorado));
       transition: opacity 0.4s var(--ease-out), transform 0.4s var(--ease-out);
     }
-    .slot time { font: 400 0.75rem/1 var(--sans); letter-spacing: 0.12em; color: var(--accent); }
+    .slot time { font: 500 0.82rem/1 var(--sans); letter-spacing: 0.04em; color: var(--accent); }
     .slot strong { display: block; font: 500 1.2rem/1.2 var(--serif); margin: 0.35rem 0 0.15rem; }
-    .slot span { font-size: 0.8rem; color: var(--ink-soft); }
+    .slot span { font-size: 0.875rem; color: var(--ink-soft); }
     .slot.is-dim, .js .week .slot.is-dim { opacity: 0.28; transform: scale(0.98); }
 
     .slot[data-d="ballet"] { --c: var(--accent); }
@@ -1254,7 +1208,7 @@
         border: 1px solid var(--dorado-suave);
         border-radius: 999px;
         background: transparent;
-        font: 400 0.75rem/1 var(--sans);
+        font: 400 0.8125rem/1 var(--sans);
         letter-spacing: 0.08em;
         cursor: pointer;
         transition: background-color 0.3s, color 0.3s, transform 0.1s ease-out;
@@ -1269,8 +1223,8 @@
       width: fit-content;
       margin-top: 0.5rem;
       padding: 0.3rem 0;
-      font: 400 0.72rem/1 var(--sans);
-      letter-spacing: 0.2em;
+      font: 500 0.8125rem/1 var(--sans);
+      letter-spacing: 0.12em;
       text-transform: uppercase;
       text-decoration: none;
       color: var(--accent);
@@ -1299,8 +1253,9 @@
     @media (min-width: 1180px) { .plans { grid-template-columns: repeat(4, 1fr); } }
 
     .plan { padding: clamp(1.8rem, 3vw, 2.4rem); }
+    .plan .card__num { min-height: 1.7rem; }
     .plan h3 { font-size: 2rem; margin: 1rem 0 0.4rem; }
-    .plan__summary { margin: 0 0 1.6rem; font-size: 0.95rem; color: var(--ink-soft); min-height: 3.2em; }
+    .plan__summary { margin: 0 0 1.6rem; font-size: 1rem; color: var(--ink-soft); min-height: 3.2em; }
     .plan__price {
       display: flex;
       align-items: baseline;
@@ -1312,13 +1267,12 @@
     }
     .plan__price strong { font: 300 clamp(2.6rem, 4.4vw, 3.2rem)/0.9 var(--sans); letter-spacing: -0.04em; }
     .plan__price sup { font: 400 1rem/1 var(--sans); align-self: flex-start; margin-top: 0.35rem; color: var(--accent); }
-    .plan__price span { font-size: 0.85rem; color: var(--ink-soft); }
+    .plan__price span { font-size: 0.9rem; color: var(--ink-soft); }
     .plan .btn { width: 100%; margin-top: auto; }
 
     .plan--featured {
       background: linear-gradient(180deg, rgba(201, 164, 76, 0.14), rgba(201, 164, 76, 0.03) 60%), var(--surface);
       border: 1px solid var(--dorado);
-      box-shadow: 0 0 0 6px var(--bg-deep), 0 0 0 7px var(--dorado-suave), 0 30px 60px -40px rgba(126, 95, 166, 0.55);
     }
     .plan--featured .plan__price strong { color: var(--accent); }
     .badge {
@@ -1326,11 +1280,11 @@
       padding: 0.45rem 0.8rem;
       background: var(--dorado);
       color: var(--tinta);
-      font: 400 0.6rem/1 var(--sans);
-      letter-spacing: 0.24em;
+      font: 500 0.8125rem/1 var(--sans);
+      letter-spacing: 0.12em;
       text-transform: uppercase;
     }
-    .plans-note { margin-top: 2rem; font-size: 0.85rem; color: var(--ink-soft); text-align: center; }
+    .plans-note { margin-top: 2rem; font-size: 0.95rem; color: var(--ink-soft); text-align: center; }
 
     /* ==========================================================
        Contact
@@ -1411,7 +1365,7 @@
     .footer .logo-stack__name { margin-right: 0; }
     .footer__slogan { font: italic 300 1.6rem/1.2 var(--serif); color: var(--accent); margin: 1.6rem 0 0; }
 
-    .footer h2 { font: 400 0.7rem/1 var(--sans); letter-spacing: 0.28em; text-transform: uppercase; color: var(--accent); margin-bottom: 1.2rem; }
+    .footer h2 { font: 500 0.8125rem/1 var(--sans); letter-spacing: 0.16em; text-transform: uppercase; color: var(--accent); margin-bottom: 1.2rem; }
     .footer ul { list-style: none; margin: 0; padding: 0; display: grid; gap: 0.35rem; }
     .footer ul a { text-decoration: none; font: 300 1.25rem/1.6 var(--serif); }
     .footer ul a:hover { color: var(--accent); }
@@ -1422,10 +1376,12 @@
       display: grid; place-items: center;
       border: 1px solid var(--dorado-suave);
       border-radius: 50%;
-      transition: background-color 0.3s, border-color 0.3s, transform 0.1s ease-out;
+      transition: background-color 0.2s, border-color 0.2s, transform 0.12s ease-out;
     }
-    .socials a:hover { background: var(--dorado); border-color: var(--dorado); }
-    .socials a:hover svg { fill: var(--ink); }
+    @media (hover: hover) and (pointer: fine) {
+      .socials a:hover { background: var(--dorado); border-color: var(--dorado); }
+      .socials a:hover svg { fill: var(--tinta); }
+    }
     .socials a:active { transform: scale(0.94); }
     .socials svg { width: 18px; height: 18px; fill: var(--ink); }
 
@@ -1437,13 +1393,13 @@
       gap: 0.5rem;
       text-align: center;
     }
-    .footer__copy { margin: 0; font-size: 0.8rem; letter-spacing: 0.12em; }
+    .footer__copy { margin: 0; font-size: 0.875rem; letter-spacing: 0.04em; }
 
     /* Developer credit: small and discreet */
     .credit {
       margin: 0;
-      font: 300 0.72rem/1.6 var(--sans);
-      letter-spacing: 0.08em;
+      font: 400 0.8125rem/1.6 var(--sans);
+      letter-spacing: 0.04em;
       color: var(--accent);
       opacity: 0.75;
     }
@@ -1551,7 +1507,7 @@
       transition: border-color 0.3s, background-color 0.3s, transform 0.1s ease-out;
     }
     .plan-option strong { font: 500 1.1rem/1.15 var(--serif); }
-    .plan-option small { font-size: 0.78rem; color: var(--ink-soft); }
+    .plan-option small { font-size: 0.8125rem; color: var(--ink-soft); }
     .plan-option:active span { transform: scale(0.98); }
     .plan-option input:checked + span { border-color: var(--dorado); background: var(--glow); box-shadow: inset 0 0 0 1px var(--dorado); }
     .plan-option input:focus-visible + span { outline: 1.5px solid var(--accent); outline-offset: 3px; }
@@ -1571,7 +1527,7 @@
       padding: 0 0.2rem;
       border: 0;
       background: none;
-      font: 400 0.72rem/1 var(--sans);
+      font: 400 0.8125rem/1 var(--sans);
       letter-spacing: 0.18em;
       text-transform: uppercase;
       color: var(--accent);
@@ -1635,43 +1591,13 @@
       border: 1px solid var(--dorado);
       animation: pulse 3.2s var(--ease-out) infinite;
     }
+    /* Two calm pulses to announce it, then it rests */
+    .wa-float::before, .wa-float::after { animation-iteration-count: 2; opacity: 0; }
     .wa-float::after { animation-delay: 1.6s; }
     @keyframes pulse {
       0% { transform: scale(1); opacity: 0.9; }
       100% { transform: scale(1.75); opacity: 0; }
     }
-
-    /* ==========================================================
-       Custom cursor (fine pointers only, enabled by script)
-       ========================================================== */
-    .cursor { display: none; }
-    .has-cursor, .has-cursor a, .has-cursor button { cursor: none; }
-    .has-cursor .cursor {
-      display: block;
-      position: fixed;
-      left: 0; top: 0;
-      z-index: 400;
-      pointer-events: none;
-    }
-    .cursor__dot, .cursor__ring {
-      position: absolute;
-      left: 0; top: 0;
-      border-radius: 50%;
-    }
-    .cursor__dot { width: 6px; height: 6px; margin: -3px 0 0 -3px; background: var(--dorado); }
-    .cursor__ring {
-      width: 34px; height: 34px;
-      margin: -17px 0 0 -17px;
-      border: 1px solid var(--dorado);
-      transition: width 0.35s var(--ease-out), height 0.35s var(--ease-out), margin 0.35s var(--ease-out),
-                  background-color 0.35s, opacity 0.3s;
-    }
-    .cursor.is-hover .cursor__ring {
-      width: 64px; height: 64px;
-      margin: -32px 0 0 -32px;
-      background: rgba(201, 164, 76, 0.12);
-    }
-    .cursor.is-hidden { opacity: 0; }
 
     /* ==========================================================
        Accessibility preferences
@@ -1682,7 +1608,6 @@
       .js .reveal, .js .split .w > span, .js .mask { opacity: 1; transform: none; clip-path: none; transition: none; }
       .js .draw use { stroke-dashoffset: 0; transition: none; }
       .js .hero__rule::before { transform: none; transition: none; }
-      .fx-card::after { display: none; }
       .card__trace rect { transition: none; }
       .loader { transition: opacity 0.3s ease; }
       .loader.is-lifting { transform: none; opacity: 0; }
@@ -1784,7 +1709,6 @@
     </div>
   </div>
 
-  <div class="cursor" aria-hidden="true"><span class="cursor__ring"></span><span class="cursor__dot"></span></div>
 
   <!-- Navigation -->
   <header class="nav" id="nav">
@@ -1869,13 +1793,13 @@
     </section>
 
     <!-- 2. Disciplines (rendered from DISCIPLINES) -->
-    <section class="section" data-num="01" id="disciplinas" aria-labelledby="disc-title">
+    <section class="section" id="disciplinas" aria-labelledby="disc-title">
       <div class="deco" style="left:-40px; top:8%; width:180px;" data-parallax="0.12" aria-hidden="true">
         <svg class="pose" viewBox="0 0 200 330"><use href="#pose-attitude"/></svg>
       </div>
       <div class="wrap">
         <header class="section-head">
-          <span class="section-index label reveal">01 · Disciplinas</span>
+          <span class="section-index label reveal">Disciplinas</span>
           <h2 class="split" id="disc-title">Cuatro formas de <em>elevarte</em></h2>
           <p class="lede reveal">Cada disciplina tiene su propio pulso. Combínalas según tu energía de la semana: respirar, crear, sudar, volver a empezar.</p>
         </header>
@@ -1884,25 +1808,27 @@
     </section>
 
     <!-- 3. What is ballet fit -->
-    <section class="section section--deep" data-num="02" data-num-side="left" id="ballet-fit" aria-labelledby="bf-title">
+    <section class="section section--deep" id="ballet-fit" aria-labelledby="bf-title">
       <div class="wrap">
         <div class="bf">
-          <figure class="bf__visual mask" style="margin:0">
-            <div class="bf__barre" aria-hidden="true"></div>
-            <div class="bf__caption" aria-hidden="true"><span class="label">La barra</span><span class="label">Plié en segunda</span></div>
-            <svg class="pose draw" viewBox="0 0 200 330" role="img" aria-label="Silueta de una bailarina en plié frente a la barra"><use href="#pose-plie"/></svg>
+          <figure class="bf__visual" style="margin:0">
+            <div class="bf__frame mask">
+              <img src="assets/degas-barra.webp" width="1200" height="1109" loading="lazy" decoding="async"
+                   alt="Pintura de dos bailarinas con tutú blanco estirando la pierna sobre la barra de un salón de ensayo">
+            </div>
+            <figcaption>Edgar Degas, <em>Bailarinas practicando en la barra</em>, 1877</figcaption>
           </figure>
           <div class="bf__text">
             <header class="section-head" style="margin-bottom:2rem">
-              <span class="section-index label reveal">02 · Ballet fit</span>
+              <span class="section-index label reveal">Ballet fit</span>
               <h2 class="split" id="bf-title">¿Qué es el <span class="nowrap"><em>ballet fit</em>?</span></h2>
             </header>
             <p class="dropcap reveal">Es un entrenamiento que hereda del ballet clásico su técnica, su postura y su elegancia, y las lleva al terreno del ejercicio funcional y el cardio. Trabajas principalmente con el peso de tu propio cuerpo y con la barra, en secuencias que combinan pliés, extensiones y pequeños pulsos con movimientos que elevan el ritmo cardíaco.</p>
             <p class="reveal">El resultado es un trabajo completo: activa todos los grupos musculares, mejora la postura, gana flexibilidad y tonifica de forma armónica. No necesitas haber tomado clases de ballet antes; cada ejercicio se explica paso a paso y se adapta a tu nivel.</p>
             <ul class="pillars">
-              <li class="fx-card reveal" data-tilt><svg class="card__trace" aria-hidden="true"><rect x="1" y="1" width="calc(100% - 2px)" height="calc(100% - 2px)" pathLength="1"/></svg><span class="pillar__num" aria-hidden="true">01</span><strong>Técnica clásica</strong><span>Alineación, colocación y gracia del ballet.</span></li>
-              <li class="fx-card reveal" data-tilt style="--delay:0.12s"><svg class="card__trace" aria-hidden="true"><rect x="1" y="1" width="calc(100% - 2px)" height="calc(100% - 2px)" pathLength="1"/></svg><span class="pillar__num" aria-hidden="true">02</span><strong>Funcional y cardio</strong><span>Fuerza, resistencia y ritmo con tu propio peso.</span></li>
-              <li class="fx-card reveal" data-tilt style="--delay:0.24s"><svg class="card__trace" aria-hidden="true"><rect x="1" y="1" width="calc(100% - 2px)" height="calc(100% - 2px)" pathLength="1"/></svg><span class="pillar__num" aria-hidden="true">03</span><strong>Para todo nivel</strong><span>Sin experiencia previa en ballet.</span></li>
+              <li class="fx-card reveal" data-tilt><svg class="card__trace" aria-hidden="true"><rect x="1" y="1" width="calc(100% - 2px)" height="calc(100% - 2px)" pathLength="1"/></svg><strong>Técnica clásica</strong><span>Alineación, colocación y gracia del ballet.</span></li>
+              <li class="fx-card reveal" data-tilt style="--delay:0.12s"><svg class="card__trace" aria-hidden="true"><rect x="1" y="1" width="calc(100% - 2px)" height="calc(100% - 2px)" pathLength="1"/></svg><strong>Funcional y cardio</strong><span>Fuerza, resistencia y ritmo con tu propio peso.</span></li>
+              <li class="fx-card reveal" data-tilt style="--delay:0.24s"><svg class="card__trace" aria-hidden="true"><rect x="1" y="1" width="calc(100% - 2px)" height="calc(100% - 2px)" pathLength="1"/></svg><strong>Para todo nivel</strong><span>Sin experiencia previa en ballet.</span></li>
             </ul>
           </div>
         </div>
@@ -1910,10 +1836,10 @@
     </section>
 
     <!-- 4. Weekly schedule (rendered from SCHEDULE) -->
-    <section class="section" data-num="03" id="horarios" aria-labelledby="sched-title">
+    <section class="section" id="horarios" aria-labelledby="sched-title">
       <div class="wrap">
         <header class="section-head">
-          <span class="section-index label reveal">03 · Horarios</span>
+          <span class="section-index label reveal">Horarios</span>
           <h2 class="split" id="sched-title">Tu semana en <em>movimiento</em></h2>
           <p class="lede reveal">Una vista previa de nuestras clases. Filtra por disciplina para encontrar tu momento.</p>
         </header>
@@ -1925,14 +1851,24 @@
       </div>
     </section>
 
+    <!-- Interlude: a historic dance class, full width -->
+    <figure class="band">
+      <div class="band__frame mask">
+        <img src="assets/degas-clase.webp" srcset="assets/degas-clase-1000.webp 1000w, assets/degas-clase.webp 2000w" sizes="100vw"
+             width="2000" height="1458" loading="lazy" decoding="async"
+             alt="Pintura de una clase de ballet del siglo XIX: bailarinas con tutú, un espejo y un violinista acompañando la clase">
+      </div>
+      <figcaption class="wrap">Edgar Degas, <em>La clase de baile</em>, hacia 1870</figcaption>
+    </figure>
+
     <!-- 5. Plans (rendered from PLANS) -->
-    <section class="section section--deep" data-num="04" id="planes" aria-labelledby="plans-title">
+    <section class="section section--deep" id="planes" aria-labelledby="plans-title">
       <div class="deco" style="left:-20px; bottom:6%; width:170px;" data-parallax="0.14" aria-hidden="true">
         <svg class="pose" viewBox="0 0 200 330"><use href="#pose-tree"/></svg>
       </div>
       <div class="wrap">
         <header class="section-head">
-          <span class="section-index label reveal">04 · Planes</span>
+          <span class="section-index label reveal">Planes</span>
           <h2 class="split" id="plans-title">Elige tu <em>ritmo</em></h2>
           <p class="lede reveal">Precios en quetzales. Todos los planes incluyen acceso a las cuatro disciplinas.</p>
         </header>
@@ -1942,7 +1878,7 @@
     </section>
 
     <!-- 6. Founder -->
-    <section class="section" data-num="05" data-num-side="left" id="fundadora" aria-labelledby="founder-title">
+    <section class="section" id="fundadora" aria-labelledby="founder-title">
       <div class="wrap">
         <div class="founder">
           <figure class="portrait" style="margin-inline:auto">
@@ -1955,7 +1891,7 @@
           </figure>
 
           <div>
-            <span class="section-index label reveal">05 · La fundadora</span>
+            <span class="section-index label reveal">La fundadora</span>
             <h2 class="founder__name split" id="founder-title">Andrea <em>“Andy”</em> Cáceres</h2>
             <span class="founder__role label reveal">Fundadora e instructora de Relevé</span>
 
@@ -1975,14 +1911,14 @@
     </section>
 
     <!-- 7. Body and soul manifesto, full-color interlude -->
-    <section class="section section--stage" data-num="06" id="cuerpo-y-alma" aria-labelledby="alma-title">
+    <section class="section section--stage" id="cuerpo-y-alma" aria-labelledby="alma-title">
       <div class="deco" style="right:-30px; top:4%; width:200px;" data-parallax="0.18" aria-hidden="true">
         <svg class="pose" viewBox="0 0 200 330"><use href="#pose-stretch"/></svg>
       </div>
       <div class="wrap">
         <div class="manifesto">
           <header class="section-head" style="margin-bottom:0">
-            <span class="section-index label reveal">06 · Cuerpo y alma</span>
+            <span class="section-index label reveal">Cuerpo y alma</span>
             <h2 class="manifesto__open split" id="alma-title">Moverse con conciencia es volver a casa.</h2>
           </header>
 
@@ -2010,10 +1946,10 @@
     </section>
 
     <!-- 8. Contact -->
-    <section class="section" data-num="07" id="contacto" aria-labelledby="contact-title">
+    <section class="section" id="contacto" aria-labelledby="contact-title">
       <div class="wrap">
         <header class="section-head">
-          <span class="section-index label reveal">07 · Contacto</span>
+          <span class="section-index label reveal">Contacto</span>
           <h2 class="split" id="contact-title">Te esperamos en el <em>estudio</em></h2>
         </header>
         <div class="contact">
@@ -2083,6 +2019,7 @@
       </div>
       <div class="footer__bottom">
         <p class="footer__copy">© 2026 Relevé Estudio</p>
+        <p class="credit">Pinturas de Edgar Degas, dominio público (CC0): <a href="https://commons.wikimedia.org/wiki/File:Dancers_Practicing_at_the_Barre_MET_DT840.jpg" target="_blank" rel="noopener noreferrer">Bailarinas practicando en la barra</a> y <a href="https://commons.wikimedia.org/wiki/File:The_Dancing_Class_-_MET_29.100.184.jpg" target="_blank" rel="noopener noreferrer">La clase de baile</a>, vía Wikimedia Commons</p>
         <p class="credit">Desarrollado por <a href="https://technomaya.dev" target="_blank" rel="noopener noreferrer">TechnoMaya</a></p>
       </div>
     </div>
@@ -2328,7 +2265,7 @@
       $('#disciplineCards').innerHTML = DISCIPLINES.map((d, i) => `
         <article class="card fx-card reveal" data-tilt style="--delay:${i * 0.12}s" aria-labelledby="disc-${d.id}">
           ${traceSvg}
-          <div class="card__num"><span class="label">0${i + 1}</span><span class="label">${escapeHtml(d.intensityLabel)}</span></div>
+          <div class="card__num"><span class="label">${escapeHtml(d.intensityLabel)}</span></div>
           <div class="card__figure draw" aria-hidden="true">
             <svg class="pose" viewBox="0 0 200 330"><use href="#${d.pose}"/></svg>
           </div>
@@ -2381,7 +2318,7 @@
               ${slots.map((s, i) => {
                 const name = `${s.title} del ${day.name.toLowerCase()} a las ${s.start}`;
                 return `
-                <li class="slot fx-card reveal" data-tilt data-d="${s.discipline}" style="--delay:${i * 0.08}s">
+                <li class="slot fx-card reveal" data-d="${s.discipline}" style="--delay:${i * 0.08}s">
                   ${traceSvg}
                   <time datetime="${s.start}">${s.start} a ${endTime(s.start, s.minutes)}</time>
                   <strong>${escapeHtml(s.title)}</strong>
@@ -2447,7 +2384,6 @@
           <article class="card fx-card plan reveal${p.featured ? ' plan--featured' : ''}" data-tilt style="--delay:${i * 0.1}s" aria-labelledby="plan-${p.id}">
             ${traceSvg}
             <div class="card__num">
-              <span class="label">0${i + 1}</span>
               ${p.featured ? '<span class="badge">Más elegido</span>' : ''}
             </div>
             <h3 id="plan-${p.id}">${escapeHtml(p.name)}</h3>
@@ -2575,7 +2511,7 @@
         loader.classList.add('show-logo', 'is-lifting');
         try { sessionStorage.setItem('releve-intro', '1'); } catch (e) { /* storage unavailable */ }
         onDone();
-        setTimeout(() => { loader.hidden = true; }, reducedMotion.matches ? 350 : 1150);
+        setTimeout(() => { loader.hidden = true; }, reducedMotion.matches ? 350 : 750);
       };
 
       if (seen) {
@@ -2594,8 +2530,8 @@
       window.addEventListener('wheel', finish, { once: true, passive: true });
 
       requestAnimationFrame(() => requestAnimationFrame(() => $('.draw', loader).classList.add('is-in')));
-      timers.push(setTimeout(() => loader.classList.add('show-logo'), 1000));
-      timers.push(setTimeout(finish, 1900));
+      timers.push(setTimeout(() => loader.classList.add('show-logo'), 450));
+      timers.push(setTimeout(finish, 900));
     }
 
     /* ==========================================================
@@ -2986,46 +2922,6 @@
     }
 
     /* ==========================================================
-       Custom cursor: the dot tracks 1:1, the ring follows on a
-       critically damped spring and grows over interactive items.
-       ========================================================== */
-    function initCursor() {
-      if (!finePointer.matches || reducedMotion.matches) return;
-      const cursor = $('.cursor');
-      const dot = $('.cursor__dot', cursor);
-      const ring = $('.cursor__ring', cursor);
-      document.documentElement.classList.add('has-cursor');
-
-      const omega = (2 * Math.PI) / 0.28;
-      const p = { x: -100, y: -100 };
-      const r = { x: -100, y: -100, vx: 0, vy: 0 };
-      let last = 0;
-
-      window.addEventListener('pointermove', (e) => {
-        p.x = e.clientX; p.y = e.clientY;
-        dot.style.transform = `translate3d(${p.x}px, ${p.y}px, 0)`;
-        cursor.classList.remove('is-hidden');
-        const interactive = e.target.closest('a, button, [data-tilt]');
-        cursor.classList.toggle('is-hover', Boolean(interactive));
-      }, { passive: true });
-      document.documentElement.addEventListener('pointerleave', () => cursor.classList.add('is-hidden'));
-
-      let raf = 0;
-      const loop = (now) => {
-        const dt = Math.min((now - (last || now)) / 1000, 1 / 30);
-        last = now;
-        r.vx += (omega * omega * (p.x - r.x) - 2 * omega * r.vx) * dt;
-        r.vy += (omega * omega * (p.y - r.y) - 2 * omega * r.vy) * dt;
-        r.x += r.vx * dt; r.y += r.vy * dt;
-        ring.style.transform = `translate3d(${r.x}px, ${r.y}px, 0)`;
-        const settled = Math.abs(p.x - r.x) < 0.1 && Math.abs(p.y - r.y) < 0.1 && Math.abs(r.vx) < 0.1 && Math.abs(r.vy) < 0.1;
-        if (settled) { raf = 0; last = 0; return; }
-        raf = requestAnimationFrame(loop);
-      };
-      window.addEventListener('pointermove', () => { if (!raf) raf = requestAnimationFrame(loop); }, { passive: true });
-    }
-
-    /* ==========================================================
        Floating WhatsApp: hidden while the hero or contact section,
        which have their own WhatsApp buttons, are on screen.
        ========================================================== */
@@ -3064,7 +2960,6 @@
     initBooking();
     initFloatingButton();
     initTilt();
-    initCursor();
 
     runLoader(() => {
       revealHero();
