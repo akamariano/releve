@@ -84,14 +84,26 @@ fi
 # ------------------------------------------------------------------
 # 5. Enable GitHub Pages with GitHub Actions as the source
 # ------------------------------------------------------------------
+PAGES_ERROR=""
 enable_pages() {
   local current
   current="$(gh api "repos/$OWNER/$REPO_NAME/pages" --jq .build_type 2>/dev/null || true)"
   if [ -z "$current" ]; then
-    gh api -X POST "repos/$OWNER/$REPO_NAME/pages" -f build_type=workflow >/dev/null 2>&1
+    PAGES_ERROR="$(gh api -X POST "repos/$OWNER/$REPO_NAME/pages" -f build_type=workflow 2>&1 >/dev/null)" || return 1
   elif [ "$current" != "workflow" ]; then
-    gh api -X PUT "repos/$OWNER/$REPO_NAME/pages" -f build_type=workflow >/dev/null 2>&1
+    PAGES_ERROR="$(gh api -X PUT "repos/$OWNER/$REPO_NAME/pages" -f build_type=workflow 2>&1 >/dev/null)" || return 1
   fi
+}
+
+# A freshly created repository can take a few seconds before GitHub
+# accepts the Pages settings, so retry with a short wait.
+enable_pages_with_retry() {
+  local attempt
+  for attempt in 1 2 3 4 5 6; do
+    enable_pages && return 0
+    sleep 5
+  done
+  return 1
 }
 
 PAGES_READY=0
@@ -106,7 +118,8 @@ SHA="$(git rev-parse HEAD)"
 
 if [ "$PAGES_READY" -eq 0 ]; then
   # A brand-new empty repository may refuse Pages until it has a commit
-  enable_pages || fail "No se pudo activar GitHub Pages. Revisa Settings > Pages del repositorio."
+  say "Activando GitHub Pages..."
+  enable_pages_with_retry || fail "No se pudo activar GitHub Pages. Respuesta de GitHub: ${PAGES_ERROR:-sin detalle}"
   sleep 3
   gh workflow run "$WORKFLOW" --ref "$BRANCH" >/dev/null
 fi
